@@ -2,67 +2,53 @@ using UnityEngine;
 
 public class Creater : MonoBehaviour
 {
-    [SerializeField] private Vector3 _currentScale;
-    [SerializeField] private Vector3 _currentPosition;
-
-    private GameObject _cubePrefab;
     private int _minCount = 2;
     private int _maxCount = 6;
-    private int Chance = 1;
-
-    private void Start()
-    {
-        _cubePrefab = Resources.Load<GameObject>("Cube");
-    }
+    private int _success = 1;
 
     private void OnEnable()
     {
-        Paint();
+        Cube.Removed += TryCreateCubes;
     }
 
-    private void Update()
+    private void OnDisable()
     {
-        _currentPosition = transform.position;
-        _currentScale = transform.localScale;
+        Cube.Removed -= TryCreateCubes;
     }
 
-    private void OnDestroy()
+    private void TryCreateCubes(Cube prefab, Vector3 currentPosition, Vector3 currentScale, int chance)
     {
-        TryCreateCubes();
+        int convertToRandom = chance + 1;
+        int checker = Random.Range(_success, convertToRandom);
+
+
+        Debug.Log(chance + " Шанс");
+
+        if (checker == _success)
+            CreateCubes(prefab, currentPosition,currentScale);
     }
 
-    private void Paint()
-    {
-        Color newColor = Random.ColorHSV();
-        gameObject.GetComponent<MeshRenderer>().materials[0].color = newColor;
-    }
-
-    private void TryCreateCubes()
-    {
-        int convertToRandom = Chance + 1;
-        int success = 1;
-        int checker = Random.Range(success, convertToRandom);
-
-        if (checker == success)
-            CreateCubes();
-    }
-
-    private void CreateCubes()
+    private void CreateCubes(Cube _prefab, Vector3 currentPosition, Vector3 _currentScale)
     {
         int convertToRandom = _maxCount + 1;
 
         int countCubes = Random.Range(_minCount, convertToRandom);
 
-            Debug.Log(countCubes + "Количество кубов");
+        Debug.Log(countCubes + "Количество кубов");
 
-        for(int i = 1; i <= countCubes; i++)
+        for (int i = 1; i <= countCubes; i++)
         {
-            GameObject newCube = Instantiate(_cubePrefab, _currentPosition, Quaternion.identity);
+            Cube newCube = Instantiate(_prefab, currentPosition, Quaternion.identity);
+
+            newCube.GetComponent<Cube>().CutChance();
+
+            newCube.gameObject.SetActive(true);
+
+            newCube.enabled = true;
 
             Vector3 newSize = _currentScale / 2;
+
             newCube.transform.localScale = newSize;
-            int newChance = Chance * 2;
-            newCube.GetComponent<Creater>().Chance = newChance;
         }
     }
 }
