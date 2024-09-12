@@ -46,9 +46,9 @@ public class Creater : MonoBehaviour
 
             newCube.enabled = true;
 
-            Vector3 newSize = _currentScale / 2;
+            Vector3 cutSize = _currentScale / 2;
 
-            newCube.transform.localScale = newSize;
+            newCube.transform.localScale = cutSize;
         }
     }
 }

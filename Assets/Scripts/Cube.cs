@@ -1,6 +1,8 @@
 using System;
 using UnityEngine;
 
+[RequireComponent(typeof(MeshRenderer))]
+
 public class Cube : MonoBehaviour
 {
     public static event Action<Cube, Vector3, Vector3, int> Removed;
