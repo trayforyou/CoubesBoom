@@ -14,9 +14,9 @@ public class Detonator : MonoBehaviour
         Cube.Removed -= Detonate;
     }
 
-    private void Detonate(Cube cube, Vector3 cubePosition, Vector3 currentScale, int chance)
+    private void Detonate(GameObject cube)
     {
-        Collider[] colliders = Physics.OverlapSphere(cubePosition, 0);
+        Collider[] colliders = Physics.OverlapSphere(cube.transform.position, 0);
 
         foreach (Collider collider in colliders)
         {
@@ -24,7 +24,7 @@ public class Detonator : MonoBehaviour
 
             if (rigidbody != null)
             {
-                rigidbody.AddExplosionForce(_explosionForce, cubePosition, 0);
+                rigidbody.AddExplosionForce(_explosionForce, cube.transform.position, 0);
             }
         }
     }

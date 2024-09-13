@@ -2,31 +2,33 @@ using System;
 using UnityEngine;
 
 [RequireComponent(typeof(MeshRenderer))]
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Cube))]
 
 public class Cube : MonoBehaviour
 {
-    public static event Action<Cube, Vector3, Vector3, int> Removed;
+    public static event Action<GameObject> Removed;
 
-    [SerializeField] private Vector3 _currentScale;
-    [SerializeField] private Vector3 _currentPosition;
     [SerializeField] private int _chance = 1;
 
     private Cube _prefab;
 
-    public void CutChance()
+    public int Chance => _chance;
+
+    public void CutHalfChance()
     {
-        _chance = _chance * 2;
+        int halfChance = 2;
+        _chance = _chance * halfChance;
     }
 
-    private void Start()
+    private void Awake()
     {
         _prefab = GetComponent<Cube>();
     }
 
     private void Update()
     {
-        _currentPosition = transform.position;
-        _currentScale = transform.localScale;
+
     }
 
     private void OnEnable()
@@ -36,7 +38,7 @@ public class Cube : MonoBehaviour
 
     private void OnDestroy()
     {
-        Removed?.Invoke(_prefab, _currentPosition, _currentScale, _chance);
+        Removed?.Invoke(this.gameObject);
     }
 
     private void Paint()

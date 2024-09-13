@@ -16,37 +16,32 @@ public class Creater : MonoBehaviour
         Cube.Removed -= TryCreateCubes;
     }
 
-    private void TryCreateCubes(Cube prefab, Vector3 currentPosition, Vector3 currentScale, int chance)
+    private void TryCreateCubes(GameObject cube)
     {
-        int convertToRandom = chance + 1;
-        int checker = Random.Range(_success, convertToRandom);
+        int convertToRandom = cube.GetComponent<Cube>().Chance + 1;
+        int result = Random.Range(_success, convertToRandom);
 
-
-        Debug.Log(chance + " Шанс");
-
-        if (checker == _success)
-            CreateCubes(prefab, currentPosition,currentScale);
+        if (result == _success)
+            CreateCubes(cube);
     }
 
-    private void CreateCubes(Cube _prefab, Vector3 currentPosition, Vector3 _currentScale)
+    private void CreateCubes(GameObject cube)
     {
         int convertToRandom = _maxCount + 1;
 
         int countCubes = Random.Range(_minCount, convertToRandom);
 
-        Debug.Log(countCubes + "Количество кубов");
-
         for (int i = 1; i <= countCubes; i++)
         {
-            Cube newCube = Instantiate(_prefab, currentPosition, Quaternion.identity);
+            int halfSize = 2;
 
-            newCube.GetComponent<Cube>().CutChance();
+            GameObject newCube = Instantiate(cube,cube.transform.position, Quaternion.identity);
 
-            newCube.gameObject.SetActive(true);
+            newCube.SetActive(true);
+            newCube.GetComponent<Cube>().enabled = true;
+            newCube.GetComponent<Cube>().CutHalfChance();
 
-            newCube.enabled = true;
-
-            Vector3 cutSize = _currentScale / 2;
+            Vector3 cutSize = newCube.transform.localScale / halfSize;
 
             newCube.transform.localScale = cutSize;
         }
