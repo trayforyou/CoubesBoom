@@ -7,28 +7,17 @@ using UnityEngine;
 
 public class Cube : MonoBehaviour
 {
-    public static event Action<GameObject> Removed;
 
     [SerializeField] private int _chance = 1;
 
-    private Cube _prefab;
-
     public int Chance => _chance;
 
+    public event Action<GameObject> Removed;
+    
     public void CutHalfChance()
     {
         int halfChance = 2;
         _chance = _chance * halfChance;
-    }
-
-    private void Awake()
-    {
-        _prefab = GetComponent<Cube>();
-    }
-
-    private void Update()
-    {
-
     }
 
     private void OnEnable()
@@ -38,7 +27,7 @@ public class Cube : MonoBehaviour
 
     private void OnDestroy()
     {
-        Removed?.Invoke(this.gameObject);
+        Removed?.Invoke(gameObject);
     }
 
     private void Paint()

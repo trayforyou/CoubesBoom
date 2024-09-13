@@ -2,21 +2,22 @@ using UnityEngine;
 
 public class Detonator : MonoBehaviour
 {
-    private float _explosionForce = 500;
+    [SerializeField] private Creater creater;
+    [SerializeField] private float _explosionForce = 500;
 
     private void OnEnable()
     {
-        Cube.Removed += Detonate;
+        creater.CubesCreated += Detonate;
     }
 
     private void OnDisable()
     {
-        Cube.Removed -= Detonate;
+        creater.CubesCreated -= Detonate;
     }
 
-    private void Detonate(GameObject cube)
+    private void Detonate(Vector3 explosionPoint)
     {
-        Collider[] colliders = Physics.OverlapSphere(cube.transform.position, 0);
+        Collider[] colliders = Physics.OverlapSphere(explosionPoint, 0);
 
         foreach (Collider collider in colliders)
         {
@@ -24,7 +25,7 @@ public class Detonator : MonoBehaviour
 
             if (rigidbody != null)
             {
-                rigidbody.AddExplosionForce(_explosionForce, cube.transform.position, 0);
+                rigidbody.AddExplosionForce(_explosionForce, explosionPoint, 0);
             }
         }
     }
