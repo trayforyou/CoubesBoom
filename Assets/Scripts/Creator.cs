@@ -11,7 +11,7 @@ public class Creater : MonoBehaviour
     private int _maxCount = 6;
     private int _success = 1;
 
-    public event Action<Vector3> CubesCreated;
+    public event Action<Cube> CubesRemoved;
 
     private void OnEnable()
     {
@@ -21,13 +21,16 @@ public class Creater : MonoBehaviour
 
     private void TryCreateCubes(GameObject cube)
     {
-        cube.GetComponent<Cube>().Removed -= TryCreateCubes;
+        Cube targetCube = cube.GetComponent<Cube>();
+        targetCube.Removed -= TryCreateCubes;
 
         int convertToRandom = cube.GetComponent<Cube>().Chance + 1;
         int result = Random.Range(_success, convertToRandom);
 
         if (result == _success)
             CreateCubes(cube);
+        else
+            CubesRemoved?.Invoke(targetCube);
     }
 
     private void CreateCubes(GameObject cube)
@@ -49,13 +52,12 @@ public class Creater : MonoBehaviour
             newCube.SetActive(true);
             newCubeComponent.enabled = true;
             newCubeComponent.CutHalfChance();
+            newCubeComponent.MultiplyExplosionCoefficient();
             newCubeComponent.Removed += TryCreateCubes;
 
             Vector3 cutSize = newCube.transform.localScale / halfSize;
 
             newCube.transform.localScale = cutSize;
         }
-
-        CubesCreated?.Invoke(newCubesLocate);
     }
 }

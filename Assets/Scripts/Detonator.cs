@@ -3,21 +3,26 @@ using UnityEngine;
 public class Detonator : MonoBehaviour
 {
     [SerializeField] private Creater creater;
-    [SerializeField] private float _explosionForce = 500;
+    [SerializeField] private float _explosionForce = 1500000000;
+    [SerializeField] private float _explosionRadius = 15000000;
 
     private void OnEnable()
     {
-        creater.CubesCreated += Detonate;
+        creater.CubesRemoved += Detonate;
     }
 
     private void OnDisable()
     {
-        creater.CubesCreated -= Detonate;
+        creater.CubesRemoved -= Detonate;
     }
 
-    private void Detonate(Vector3 explosionPoint)
+    private void Detonate(Cube cube)
     {
-        Collider[] colliders = Physics.OverlapSphere(explosionPoint, 0);
+        Vector3 explosionPoint = cube.transform.position;
+        float currentExplosionForce = _explosionForce * cube.ExplosionMultiplyer;
+        float currentExplosionRadius = _explosionRadius * cube.ExplosionMultiplyer;
+
+        Collider[] colliders = Physics.OverlapSphere(explosionPoint, currentExplosionRadius);
 
         foreach (Collider collider in colliders)
         {
@@ -25,7 +30,7 @@ public class Detonator : MonoBehaviour
 
             if (rigidbody != null)
             {
-                rigidbody.AddExplosionForce(_explosionForce, explosionPoint, 0);
+                rigidbody.AddExplosionForce(currentExplosionForce, explosionPoint, currentExplosionRadius);
             }
         }
     }

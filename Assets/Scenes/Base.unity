@@ -246,7 +246,7 @@ Rigidbody:
   serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -288,6 +288,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _chance: 1
+  _explosionCoefficient: 1
 --- !u!65 &146360811
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -646,7 +647,7 @@ Rigidbody:
   serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -688,6 +689,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _chance: 1
+  _explosionCoefficient: 1
 --- !u!65 &1269514542
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -768,7 +770,7 @@ Transform:
   m_GameObject: {fileID: 1269514538}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 343.63, y: 2, z: 29.71}
+  m_LocalPosition: {x: 343.63, y: 2, z: 25.1}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1022,6 +1024,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   creater: {fileID: 400703554}
   _explosionForce: 500
+  _explosionRadius: 1
 --- !u!4 &1510789802
 Transform:
   m_ObjectHideFlags: 0
@@ -1201,7 +1204,7 @@ Transform:
   m_GameObject: {fileID: 1764129747}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 347.9, y: 2, z: 29.71}
+  m_LocalPosition: {x: 347.9, y: 2, z: 34.4}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1232,6 +1235,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _chance: 1
+  _explosionCoefficient: 1
 --- !u!54 &1764129755
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1242,7 +1246,7 @@ Rigidbody:
   serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
