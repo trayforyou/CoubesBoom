@@ -3,28 +3,33 @@ using UnityEngine;
 
 [RequireComponent(typeof(MeshRenderer))]
 [RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(Cube))]
 
 public class Cube : MonoBehaviour
 {
     [SerializeField] private int _chance = 1;
-    [SerializeField] private int _explosionCoefficient = 1;
+    [SerializeField] private int _explosionCoefficient = 3;
+
+    private int _sizeMultiplayer = 2;
 
     public int Chance => _chance;
-    public int ExplosionMultiplyer => _explosionCoefficient;
+    public int ExplosionCoefficient => _explosionCoefficient;
 
-    public event Action<GameObject> Removed;
+    public event Action<Cube> Removed;
     
-    public void CutHalfChance()
+    public void Init()
     {
-        int halfChance = 2;
-        _chance *= halfChance;
+        CutHalfChance();
+        MultiplyExplosionCoefficient();
     }
 
-    public void MultiplyExplosionCoefficient()
+    private void CutHalfChance()
     {
-        int multiplayer = 2;
-        _explosionCoefficient *= multiplayer;
+        _chance = _chance * _sizeMultiplayer;
+    }
+
+    private void MultiplyExplosionCoefficient()
+    {
+        _explosionCoefficient *= _sizeMultiplayer;
     }
 
     private void OnEnable()
@@ -34,12 +39,12 @@ public class Cube : MonoBehaviour
 
     private void OnDestroy()
     {
-        Removed?.Invoke(gameObject);
+        Removed?.Invoke(GetComponent<Cube>());
     }
 
     private void Paint()
     {
-        Color newColor = UnityEngine.Random.ColorHSV();
+        UnityEngine.Color newColor = UnityEngine.Random.ColorHSV();
         gameObject.GetComponent<MeshRenderer>().materials[0].color = newColor;
     }
 }

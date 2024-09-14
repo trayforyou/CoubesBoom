@@ -1235,7 +1235,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _chance: 1
-  _explosionCoefficient: 1
+  _explosionCoefficient: 3
 --- !u!54 &1764129755
 Rigidbody:
   m_ObjectHideFlags: 0

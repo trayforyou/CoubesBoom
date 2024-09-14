@@ -19,8 +19,9 @@ public class Detonator : MonoBehaviour
     private void Detonate(Cube cube)
     {
         Vector3 explosionPoint = cube.transform.position;
-        float currentExplosionForce = _explosionForce * cube.ExplosionMultiplyer;
-        float currentExplosionRadius = _explosionRadius * cube.ExplosionMultiplyer;
+
+        float currentExplosionForce = _explosionForce * cube.ExplosionCoefficient;
+        float currentExplosionRadius = _explosionRadius * cube.ExplosionCoefficient;
 
         Collider[] colliders = Physics.OverlapSphere(explosionPoint, currentExplosionRadius);
 

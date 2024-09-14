@@ -19,44 +19,42 @@ public class Creater : MonoBehaviour
             cube.Removed += TryCreateCubes;
     }
 
-    private void TryCreateCubes(GameObject cube)
+    private void TryCreateCubes(Cube cube)
     {
-        Cube targetCube = cube.GetComponent<Cube>();
-        targetCube.Removed -= TryCreateCubes;
+        cube.Removed -= TryCreateCubes;
 
-        int convertToRandom = cube.GetComponent<Cube>().Chance + 1;
+        int convertToRandom = cube.Chance + 1;
         int result = Random.Range(_success, convertToRandom);
 
         if (result == _success)
+        {
             CreateCubes(cube);
+        }
         else
-            CubesRemoved?.Invoke(targetCube);
+        {
+            CubesRemoved?.Invoke(cube);
+        }
     }
 
-    private void CreateCubes(GameObject cube)
+    private void CreateCubes(Cube cube)
     {
         Vector3 newCubesLocate = cube.transform.position;
 
         int convertToRandom = _maxCount + 1;
-        int countCubes = UnityEngine.Random.Range(_minCount, convertToRandom);
+        int countCubes = Random.Range(_minCount, convertToRandom);
 
         for (int i = 1; i <= countCubes; i++)
         {
             int halfSize = 2;
-            
 
-            GameObject newCube = Instantiate(cube, newCubesLocate, Quaternion.identity);
+            Cube newCube = Instantiate(cube, newCubesLocate, Quaternion.identity);
 
-            Cube newCubeComponent = newCube.GetComponent<Cube>();
-            
-            newCube.SetActive(true);
-            newCubeComponent.enabled = true;
-            newCubeComponent.CutHalfChance();
-            newCubeComponent.MultiplyExplosionCoefficient();
-            newCubeComponent.Removed += TryCreateCubes;
+            newCube.gameObject.SetActive(true);
+            newCube.enabled = true;
+            newCube.Removed += TryCreateCubes;
+            newCube.Init();
 
             Vector3 cutSize = newCube.transform.localScale / halfSize;
-
             newCube.transform.localScale = cutSize;
         }
     }
